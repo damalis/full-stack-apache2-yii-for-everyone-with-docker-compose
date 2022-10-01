@@ -1,4 +1,4 @@
-# [full stack apache2 Yii for everyone with docker compose](https://github.com/damalis/full-stack-apache2-yiiframework-for-everyone-with-docker-compose)
+# [full stack apache2 Yii for everyone with docker compose](https://github.com/damalis/full-stack-apache2-yii-for-everyone-with-docker-compose)
 
 If You want to have a Yii "basic" website at short time; 
 
@@ -44,12 +44,12 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 
 download with
 ```
-git clone https://github.com/damalis/full-stack-apache2-yiiframework-for-everyone-with-docker-compose.git
+git clone https://github.com/damalis/full-stack-apache2-yii-for-everyone-with-docker-compose.git
 ```
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
 ```
-cd full-stack-apache2-yiiframework-for-everyone-with-docker-compose
+cd full-stack-apache2-yii-for-everyone-with-docker-compose
 chmod +x install.sh
 ./install.sh
 ```
@@ -69,13 +69,13 @@ Make sure to [add your user to the `docker` group](https://docs.docker.com/insta
 
 download with
 ```
-git clone https://github.com/damalis/full-stack-apache2-yiiframework-for-everyone-with-docker-compose.git
+git clone https://github.com/damalis/full-stack-apache2-yii-for-everyone-with-docker-compose.git
 ```
 
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
 ```
-cd full-stack-apache2-yiiframework-for-everyone-with-docker-compose
+cd full-stack-apache2-yii-for-everyone-with-docker-compose
 ```
 
 ### Manual Configuration
@@ -106,7 +106,7 @@ change example.com to your domain name in ```./phpmyadmin/apache2/sites-availabl
 Firstly: will create external volume
 
 ```
-docker volume create --driver local --opt type=none --opt device=/home/ubuntu/full-stack-apache2-yiiframework-for-everyone-with-docker-compose/certbot --opt o=bind certbot-etc
+docker volume create --driver local --opt type=none --opt device=/home/ubuntu/full-stack-apache2-yii-for-everyone-with-docker-compose/certbot --opt o=bind certbot-etc
 ```
 
 ```
@@ -210,17 +210,17 @@ pm.max_requests = 1000
 Or you should make changes custom host configurations then must restart service
 
 ```
-docker container restart yiiframework
+docker container restart yii
 ```
 
-add and/or remove yiiframework site folders and files with any ftp client program in ```./yiiframework/html``` folder.
+add and/or remove yii site folders and files with any ftp client program in ```./yii/html``` folder.
 <br />You can also visit `https://example.com` to access website after starting the containers.
 
 #### Redis
 
 add [Redis Cache](https://github.com/yiisoft/yii2-redis) plugin and must add below code to config file.
 
-modify redis cache configuration values in the ```./yiiframework/html/index.php``` file.
+modify redis cache configuration values in the ```./yii/html/index.php``` file.
 
 ### phpMyAdmin
 
@@ -243,8 +243,8 @@ This will back up the all files and folders, once per day, and write it to ./bac
 ##### # old docker backup folder remove
 50 23 * * * find /home/ubuntu/${DIRECTORY_PATH}/backups/backup* -type f -mtime +1 | xargs rm
 
-##### # backup exclude yiiframework, backups folders in /home/ubuntu/${DIRECTORY_PATH}
-00 01 * * * tar -czvf /home/ubuntu/${DIRECTORY_PATH}/backups/'backup-example.com-'$(date +"\%Y-\%m-\%dT\%H-\%M-\%S")'.tar.gz' --exclude='yiiframework/app' --exclude='backups' /home/ubuntu/${DIRECTORY_PATH}
+##### # backup exclude yii, backups folders in /home/ubuntu/${DIRECTORY_PATH}
+00 01 * * * tar -czvf /home/ubuntu/${DIRECTORY_PATH}/backups/'backup-example.com-'$(date +"\%Y-\%m-\%dT\%H-\%M-\%S")'.tar.gz' --exclude='yii/app' --exclude='backups' /home/ubuntu/${DIRECTORY_PATH}
 
 [CronHowto](https://help.ubuntu.com/community/CronHowto)
 							 							 
