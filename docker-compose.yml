@@ -2,11 +2,11 @@ version: '3.7'
 
 services:
 
-    yiiframework:
+    yii:
         depends_on:
             - database
         image: 'yiisoftware/yii2-php:${PHP_IMAGE_NAME}'
-        container_name: yiiframework
+        container_name: yii
         networks:
             - backend
         volumes:
@@ -18,7 +18,7 @@ services:
             - type: bind
               source: ./php-fpm/php-fpm.d/z-www.conf
               target: '${PHP_INI_DIR_PREFIX}/php-fpm.d/z-www.conf'
-        hostname: yiiframework
+        hostname: yii
         restart: unless-stopped
         ports:
             - '9000:80'
@@ -30,14 +30,14 @@ services:
         labels:            
             - 'docker-volume-backup.stop-during-backup=true'
         command: >
-            bash -c "pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis; if [ \"$$(ls -A ./basic)\" ]; then composer update --prefer-dist yiisoft/yii2-app-basic --working-dir=/app/basic --no-interaction; else composer create-project --prefer-dist yiisoft/yii2-app-basic basic --no-interaction; fi 
-            && cp -R /app/basic/web/css ${WEBSERVER_DOC_ROOT}/ && composer require --prefer-dist "yiisoft/yii2-redis":~2.0.0 --working-dir=/app/basic; sed \"s/DB_USER/${DB_USER}/;s/DB_PASSWORD/${DB_PASSWORD}/;s/DB_NAME/${DB_NAME}/\" ${WEBSERVER_DOC_ROOT}/db.php_orj > ${WEBSERVER_DOC_ROOT}/db.php 
+            bash -c "pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis; if [ \"$$(ls -A ./basic)\" ]; then composer update yiisoft/yii2-app-basic --working-dir=/app/basic --no-interaction; else composer create-project yiisoft/yii2-app-basic basic --no-interaction; fi 
+            && cp -R /app/basic/web/css ${WEBSERVER_DOC_ROOT}/ && composer require "yiisoft/yii2-redis":~2.0.0 --working-dir=/app/basic; sed \"s/DB_USER/${DB_USER}/;s/DB_PASSWORD/${DB_PASSWORD}/;s/DB_NAME/${DB_NAME}/\" ${WEBSERVER_DOC_ROOT}/db.php_orj > ${WEBSERVER_DOC_ROOT}/db.php 
             && sed -e \"/^[[:space:]]\+.cookieValidationKey/s/''/'$$(tr -dc 'A-Za-z0-9!#$$%&()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c 32 ; echo)'/\" ${WEBSERVER_DOC_ROOT}/web.php_orj > ${WEBSERVER_DOC_ROOT}/web.php; 
             mkdir -p ${WEBSERVER_DOC_ROOT}/assets && chmod -R 777 ${WEBSERVER_DOC_ROOT}/assets; grep -qe 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini; php-fpm"
 
     webserver:
         depends_on:
-            - yiiframework
+            - yii
         image: 'httpd:latest'
         container_name: webserver
         networks:
@@ -62,7 +62,7 @@ services:
             - '80:80'
             - '443:443'
         links:
-            - yiiframework
+            - yii
         environment:
             TZ: '${LOCAL_TIMEZONE}'
         labels:            
@@ -210,18 +210,18 @@ networks:
 
 volumes:
     html:
-        name: yiiframework-html
+        name: yii-html
         driver: local
         driver_opts:
             type: none
-            device: ${DIRECTORY_PATH}/yiiframework/html
+            device: ${DIRECTORY_PATH}/yii/html
             o: bind
     app:
-        name: yiiframework-app
+        name: yii-app
         driver: local
         driver_opts:
             type: none
-            device: ${DIRECTORY_PATH}/yiiframework/app
+            device: ${DIRECTORY_PATH}/yii/app
             o: bind
     db:
         name: ${DATABASE_CONT_NAME}-data
