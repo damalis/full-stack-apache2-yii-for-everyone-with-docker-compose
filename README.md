@@ -1,6 +1,6 @@
 # [full stack apache2 Yii for everyone with docker compose](https://github.com/damalis/full-stack-apache2-yii-for-everyone-with-docker-compose)
 
-If You want to have a Yii "basic" website at short time; 
+If You want to build a website with Yii "basic" at short time; 
 
 #### Full stack Apache2 Yii "basic":
 <p align="left"> <a href="https://www.yiiframework.com/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/993323?s=200&v=4" alt="Yii" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://www.docker.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/docker/docker.png" alt="docker" width="40" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://mariadb.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/5877084?s=200&v=4" alt="mariadb" height="50" width="50"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://www.apache.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/47359?s=200&v=4" alt="apache" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://www.php.net" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/25158?s=200&v=4" alt="php" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://redis.io" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/1529926?s=200&v=4" alt="redis" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="#" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/bash/bash.png" alt="Bash" height="50" width="50" /> </a>&nbsp;&nbsp;&nbsp;
@@ -243,7 +243,7 @@ This will back up the all files and folders, once per day, and write it to ./bac
 ##### # old docker backup folder remove
 50 23 * * * find ${DIRECTORY_PATH}/backups/backup* -type f -mtime +1 | xargs rm
 
-##### # backup exclude yii, backups folders in /home/ubuntu/${DIRECTORY_PATH}
+##### # backup exclude yii, backups folders in ${DIRECTORY_PATH}
 00 01 * * * tar -czvf ${DIRECTORY_PATH}/backups/'backup-example.com-'$(date +"\%Y-\%m-\%dT\%H-\%M-\%S")'.tar.gz' --exclude='yii/app' --exclude='backups' ${DIRECTORY_PATH}
 
 [CronHowto](https://help.ubuntu.com/community/CronHowto)
