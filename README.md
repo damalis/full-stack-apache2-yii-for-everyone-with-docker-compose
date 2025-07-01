@@ -345,18 +345,15 @@ modify redis cache configuration values in the ```./yii/config/web.php``` file.
 add [Debug](https://github.com/yiisoft/yii2-debug?tab=readme-ov-file#usage) plugin and must add below code to config file.
 
 ```
-return [
-    'bootstrap' => ['debug'],
-    'modules' => [
-        'debug' => [
-            'class' => 'yii\debug\Module',
-            // uncomment and adjust the following to add your IP if you are not connecting from localhost.
-            //'allowedIPs' => ['127.0.0.1', '::1'],
-        ],
-        // ...
+$config['bootstrap'][] = 'debug';
+$config['modules']['debug'] => [
+    'class' => 'yii\debug\Module',
+    // uncomment and adjust the following to add your IP if you are not connecting from localhost.
+    'allowedIPs' => ['*'],
     ],
-    ...
-];
+    // ...
+],
+//....
 ```
 
 modify debug configuration values in the ```./yii/config/web.php``` file.
