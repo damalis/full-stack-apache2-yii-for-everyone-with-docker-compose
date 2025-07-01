@@ -307,22 +307,35 @@ add or remove code in the ```./webserver/extra/httpd-ssl.conf``` file for custom
 
 #### Redis
 
-add [Redis Cache](https://github.com/yiisoft/yii2-redis?tab=readme-ov-file#configuration) plugin and must add below code to config file.
+add Redis [Connect](https://github.com/yiisoft/yii2-redis?tab=readme-ov-file#configuration) plugin and must add below code to config file.
 
 ```
 return [
     //....
     'components' => [
-	    //....
+        //....
         'redis' => [
             'class' => 'yii\redis\Connection',
             'hostname' => 'redis',
             'port' => 6379,
             'database' => 0,
         ],
-		//....
+        //....
     ]
 ];
+```
+add Redis [Cache](https://www.yiiframework.com/extension/yiisoft/yii2-redis/doc/api/2.0/yii-redis-cache) plugin and must add below code to config file.
+```
+return [
+    //....
+    'components' => [
+        //....
+        'cache' => [
+            'class' => 'yii\redis\Cache',
+        ],
+	//....
+    ],
+]
 ```
 
 modify redis cache configuration values in the ```./yii/config/web.php``` file.
