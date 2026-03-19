@@ -299,10 +299,9 @@ docker compose up -d # Starts services in detached mode (in the background)
 #### Website
 
 You should see the "Hello!" page in your browser. If not, please check if your PHP installation satisfies Yii's requirements.
-You can check if the minimum requirements are met using one of the following approaches:
 
 ```
-https://DOMAIN_NAME/requirements.php
+https://DOMAIN_NAME
 ```
 
 add or remove code in the ./php-fpm/php/conf.d/security.ini file for custom php.ini configurations
@@ -317,7 +316,7 @@ You should make changes custom host configurations ```./php-fpm/php-fpm.d/z-www.
 docker container restart yii
 ```
 
-add and/or remove yii site folders and files with any ftp client program in ```./yii/web``` folder.
+add and/or remove yii site folders and files with any ftp client program in ```./yii/public``` folder.
 <br />You can also visit `https://DOMAIN_NAME` to access website after starting the containers.
 
 #### Webserver
@@ -332,7 +331,7 @@ add or remove code in the ```./webserver/extra/httpd-ssl.conf``` file for custom
 Host: database
 Username: DB_USER
 Password: DB_PASSWORD
-Table name: DB_NAME
+Table Name: DB_NAME
 ```
 
 [Connecting MySQL, MariaDB](https://github.com/yiisoft/db/blob/master/docs/guide/en/connection/mysql.md)
