@@ -121,7 +121,7 @@ SSLSessionCacheTimeout  300
 <VirtualHost _default_:443>
 
 #   General setup for the virtual host
-DocumentRoot "/var/www/html/web"
+DocumentRoot "/var/www/html/public"
 ServerName example.com
 ServerAlias www.example.com
 ServerAdmin admin@example.com
@@ -133,7 +133,9 @@ TransferLog "/usr/local/apache2/logs/access_log"
 
 Protocols h2 http/1.1
 
-<Directory "/var/www/html/web">
+SetEnv APP_ENV dev
+
+<Directory "/var/www/html/public">
 	DirectoryIndex index.php
 	Options Indexes FollowSymLinks
 	AllowOverride All
@@ -280,7 +282,7 @@ SSLCertificateChainFile "/etc/letsencrypt/live/example.com/chain.pem"
     SSLOptions +StdEnvVars
 </Directory>
 
-Include /etc/letsencrypt/options-ssl-apache.conf
+Include /etc/letsencrypt/options-ssl-apache-webserver.conf
 
 #   SSL Protocol Adjustments:
 #   The safe and default but still SSL/TLS standard compliant shutdown
@@ -316,27 +318,4 @@ BrowserMatch "MSIE [2-5]" \
 CustomLog "/usr/local/apache2/logs/ssl_request_log" \
           "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
-</VirtualHost>
-
-<VirtualHost _default_:81>
-
-#   General setup for the virtual host
-DocumentRoot "/var/www/html"
-ServerName example.com
-ServerAlias www.example.com
-ServerAdmin admin@example.com
-
-ErrorLog "/usr/local/apache2/logs/error_log"
-TransferLog "/usr/local/apache2/logs/access_log"
-
-<Directory "/var/www/html">
-	DirectoryIndex index.php
-	Options Indexes FollowSymLinks
-	AllowOverride All
-	Require all granted
-</Directory>
-
-# Proxy .php requests to port 9000 of the php-fpm container
-ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://wordpress:9000/var/www/html/$1
-
-</VirtualHost>                                  
+</VirtualHost>                                
